@@ -1,0 +1,332 @@
+﻿<UserControl x:Class="PlaninarskoDrustvo.Members"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:PlaninarskoDrustvo"
+             xmlns:p="clr-namespace:PlaninarskoDrustvo.Properties"
+             mc:Ignorable="d" 
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <Style x:Key="ScrollThumbs" TargetType="{x:Type Thumb}">
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate>
+                            <Grid x:Name="Grid">
+                                <Rectangle HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="Auto" 
+                                           Height="Auto" Fill="Transparent"/>
+                                <Border x:Name="Rectangle1" CornerRadius="10 10 10 10" HorizontalAlignment="Stretch" 
+                                        VerticalAlignment="Stretch" Width="Auto" Height="Auto" 
+                                        Background="Transparent"/>
+                            </Grid>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="Tag" Value="Horizontal">
+                                    <Setter TargetName="Rectangle1" Property="Width" Value="Auto"/>
+                                    <Setter TargetName="Rectangle1" Property="Height" Value="7"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+            <!--SCROLLBARS-->
+            <Style x:Key="{x:Type ScrollBar}" TargetType="{x:Type ScrollBar}">
+                <Setter Property="Stylus.IsFlicksEnabled" Value="False"/>
+                <Setter Property="Foreground" Value="#AAA8341A"/>
+                <Setter Property="Background" Value="DarkGray"/>
+                <Setter Property="Width" Value="10"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type ScrollBar}">
+                            <Grid x:Name="GridRoot" Width="12" Background="{x:Null}">
+                                <Track x:Name="PART_Track" Grid.Row="0" IsDirectionReversed="true" Focusable="False">
+                                    <Track.Thumb>
+                                        <Thumb x:Name="Thumb" Background="Transparent" />
+                                    </Track.Thumb>
+                                    <Track.IncreaseRepeatButton>
+                                        <RepeatButton x:Name="PageUp" Command="ScrollBar.PageDownCommand" Opacity="0" Focusable="False"/>
+                                    </Track.IncreaseRepeatButton>
+                                    <Track.DecreaseRepeatButton>
+                                        <RepeatButton x:Name="PageDown" Command="ScrollBar.PageUpCommand" Opacity="0" Focusable="False"/>
+                                    </Track.DecreaseRepeatButton>
+                                </Track>
+                            </Grid>
+
+                            <ControlTemplate.Triggers>
+                                <Trigger SourceName="Thumb" Property="IsMouseOver" Value="true">
+                                    <Setter Value="Gray" 
+                                            TargetName="Thumb" Property="Background"/>
+                                </Trigger>
+                                <Trigger SourceName="Thumb" Property="IsDragging" Value="true">
+                                    <Setter Value="Gray" TargetName="Thumb" Property="Background"/>
+                                </Trigger>
+
+                                <Trigger Property="IsEnabled" Value="false">
+                                    <Setter TargetName="Thumb" Property="Visibility" Value="Collapsed"/>
+                                </Trigger>
+                                <Trigger Property="Orientation" Value="Horizontal">
+                                    <Setter TargetName="GridRoot" Property="LayoutTransform">
+                                        <Setter.Value>
+                                            <RotateTransform Angle="-90"/>
+                                        </Setter.Value>
+                                    </Setter>
+                                    <Setter TargetName="PART_Track" Property="LayoutTransform">
+                                        <Setter.Value>
+                                            <RotateTransform Angle="-90"/>
+                                        </Setter.Value>
+                                    </Setter>
+                                    <Setter Property="Width" Value="Auto"/>
+                                    <Setter Property="Height" Value="12"/>
+                                    <Setter TargetName="Thumb" Property="Tag" Value="Horizontal"/>
+                                    <Setter TargetName="PageDown" Property="Command" Value="ScrollBar.PageLeftCommand"/>
+                                    <Setter TargetName="PageUp" Property="Command" Value="ScrollBar.PageRightCommand"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <Grid Background="{DynamicResource MainGridBackground}" >
+        <Grid.RowDefinitions>
+            <RowDefinition Height="35"/>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0" Margin="20,0,0,0">
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Top" >
+                <Button Width="200" Height="30" Content="{x:Static p:Resources.ActiveMembers}" Background="{x:Null}" Foreground="{DynamicResource TitleColor}" BorderBrush="{x:Null}" Click="Active_Click"></Button>
+                <Button Width="200"  Content="{x:Static p:Resources.InactiveMembers}" Background="{x:Null}" Foreground="{DynamicResource TitleColor}" BorderBrush="{x:Null}" Click="Inactive_Click"></Button>
+            </StackPanel>
+            <Grid Grid.Row="1" x:Name="Cursor" Width="200" Height="2" HorizontalAlignment="Left" Background="{DynamicResource CursorForeground}" Margin="0,30,0,0"></Grid>
+        </Grid>
+
+        <Grid Grid.Row="2" x:Name="MainGrid">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="51*"/>
+                <ColumnDefinition Width="749*"/>
+            </Grid.ColumnDefinitions>
+            <ScrollViewer Margin="0,30,0,60" VerticalScrollBarVisibility="Auto" Grid.ColumnSpan="2">
+                <StackPanel Margin="20 0">
+                    <ItemsControl x:Name="Users" Grid.Row="1">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Border Height="70" BorderThickness="2" BorderBrush="{DynamicResource BorderColorAccent}" Background="Transparent" Margin="0,0,0,5">
+                                    
+                                    <DockPanel>
+                                        <Button x:Name="button" Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}" BorderBrush="{x:Null}" Padding="0" Width="40" Height="40" Margin="10">
+                                            <Button.Background>
+                                                <ImageBrush ImageSource="{Binding account.profile_pic}" Stretch="UniformToFill"/>
+                                            </Button.Background>
+                                        </Button>
+                                        <TextBlock Text="{Binding account.username}" FontSize="15" Foreground="{DynamicResource TextColor}" Margin="10,0,150,0" VerticalAlignment="Center"></TextBlock>
+                                        <TextBlock Text="{Binding first_name}" FontSize="15" Foreground="{DynamicResource TextColor}" Margin="0,0,5,0" VerticalAlignment="Center"></TextBlock>
+                                        <TextBlock Text="{Binding last_name}" FontSize="15" Foreground="{DynamicResource TextColor}" Margin="0,0,60,0" VerticalAlignment="Center"></TextBlock>
+                                        <materialDesign:PopupBox Margin="0" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Right">
+                                            <ListBox>
+                                                <ListBoxItem Content="{x:Static p:Resources.Details}" Foreground="{DynamicResource TextColor}" PreviewMouseLeftButtonDown="Details_PreviewMouseLeftButtonDown"/>
+                                                <ListBoxItem x:Name="EditOption" Foreground="{DynamicResource TextColor}" Content="{x:Static p:Resources.Edit}" PreviewMouseLeftButtonDown="Edit_PreviewMouseLeftButtonDown"/>
+                                            </ListBox>
+                                        </materialDesign:PopupBox>
+                                    </DockPanel>
+                                </Border>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+
+                </StackPanel>
+            </ScrollViewer>
+
+        </Grid>
+        <Grid x:Name="Filters" Grid.Row="1" Margin="20,10,0,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="81*"/>
+                <ColumnDefinition Width="319*"/>
+            </Grid.ColumnDefinitions>
+            <StackPanel Orientation="Horizontal" Grid.ColumnSpan="2">
+                <materialDesign:PopupBox>
+                    <materialDesign:PopupBox.ToggleContent>
+                        <materialDesign:PackIcon Kind="FilterVariant" Foreground="{DynamicResource MenuButton}"/>
+                    </materialDesign:PopupBox.ToggleContent>
+                    <ListBox SelectionMode="Single">
+                        <ListBoxItem Content="{x:Static p:Resources.All}" Foreground="{DynamicResource TextColor}" PreviewMouseLeftButtonDown="All_PreviewMouseLeftButtonDown"/>
+                        <ListBoxItem Content="{x:Static p:Resources.MembershipFeeUnpayed}" Foreground="{DynamicResource TextColor}" PreviewMouseLeftButtonDown="MembershipFeeUnpayed_PreviewMouseLeftButtonDown"/>
+                        <ListBoxItem Content="{x:Static p:Resources.MembershipFeePayed}" Foreground="{DynamicResource TextColor}" PreviewMouseLeftButtonDown="MembershipFeePayed_PreviewMouseLeftButtonDown"/>
+                    </ListBox>
+                </materialDesign:PopupBox>
+            </StackPanel>
+            <Button x:Name="AddNewMember" Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}" Background="{DynamicResource ButtonBackgroundColor}" HorizontalAlignment="Right" BorderBrush="{x:Null}" Padding="0" Width="30" Height="30" Click="AddNewMember_Click" Margin="0,0,10,0" Grid.Column="1" >
+                <materialDesign:PackIcon Kind="Plus" Foreground="{DynamicResource MenuButton}"/>
+            </Button>
+        </Grid>
+        <Grid x:Name="Details" Grid.Row="1" Grid.RowSpan="2" Background="{DynamicResource MainGridBackground}" Visibility="Collapsed" >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="145"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <StackPanel Grid.Row="0" Margin="0,5,0,0" Orientation="Vertical">
+                <Button Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}" Width="30" Height="30" Margin="20,0,0,0" Padding="0" HorizontalAlignment="Left" Foreground="{DynamicResource MenuButton}" Background="{x:Null}" BorderBrush="{x:Null}" Click="ArrowBack_Click">
+                    <materialDesign:PackIcon Kind="ArrowBack"/>
+                </Button>
+                <Button x:Name="button" Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}" BorderBrush="{x:Null}" Padding="0" Width="50" Height="50" Margin="10">
+                    <Button.Background>
+                        <ImageBrush x:Name="DetailsPic" Stretch="UniformToFill"/>
+                    </Button.Background>
+                </Button>
+                <TextBlock x:Name="DetailsUsername" FontSize="16" Foreground="{DynamicResource TitleColor}" HorizontalAlignment="Center"></TextBlock>
+            </StackPanel>
+            <StackPanel Grid.Row="1" Orientation="Vertical" HorizontalAlignment="Center" Margin="0,20,0,0">
+                <DockPanel Margin="0,0,0,10">
+                    <Label Content="{x:Static p:Resources.Type}" FontSize="16" Foreground="{DynamicResource TitleColor}" HorizontalAlignment="Left"></Label>
+                    <TextBlock x:Name="DetailsType" FontSize="16" Foreground="{DynamicResource TextColor}" VerticalAlignment="Center" Margin="5,0" HorizontalAlignment="Right"></TextBlock>
+                </DockPanel>
+                <DockPanel Margin="0,0,0,10">
+                    <Label Content="{x:Static p:Resources.FullName}" FontSize="16" Foreground="{DynamicResource TitleColor}" HorizontalAlignment="Left"></Label>
+                    <TextBlock x:Name="DetailsFirstName" FontSize="16" Foreground="{DynamicResource TextColor}" VerticalAlignment="Center" Margin="5,0" HorizontalAlignment="Right"></TextBlock>
+                    <TextBlock x:Name="DetailsLastName" FontSize="16" Foreground="{DynamicResource TextColor}" VerticalAlignment="Center" HorizontalAlignment="Right"></TextBlock>
+                </DockPanel>
+                <DockPanel Margin="0,0,0,10">
+                    <Label Content="{x:Static p:Resources.JoinDate}" FontSize="16" Foreground="{DynamicResource TitleColor}" HorizontalAlignment="Left"></Label>
+                    <TextBlock x:Name="DetailsJoindate" FontSize="16" Foreground="{DynamicResource TextColor}" VerticalAlignment="Center" Margin="5,0" HorizontalAlignment="Right"></TextBlock>
+                </DockPanel>
+                <DockPanel Margin="0,0,0,10">
+                    <Label Content="{x:Static p:Resources.LeftDate}" FontSize="16" Foreground="{DynamicResource TitleColor}" HorizontalAlignment="Left"></Label>
+                    <TextBlock x:Name="DetailsLeavingDate" FontSize="16" Foreground="{DynamicResource TextColor}" VerticalAlignment="Center" Margin="5,0" HorizontalAlignment="Right"></TextBlock>
+                </DockPanel>
+            </StackPanel>
+        </Grid>
+        <Grid x:Name="Edit" Grid.Row="1" Grid.RowSpan="2" Background="{DynamicResource MainGridBackground}" Visibility="Collapsed">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="120"/>
+                <RowDefinition Height="200"/>
+                <RowDefinition Height="60"/>
+            </Grid.RowDefinitions>
+            <StackPanel Grid.Row="0" Margin="0,0,0,0" Orientation="Vertical">
+                <Button Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}" Width="30" Height="30" Margin="20,0,0,0" Padding="0" HorizontalAlignment="Left" Foreground="{DynamicResource MenuButton}" Background="{x:Null}" BorderBrush="{x:Null}" Click="ArrowBack_Click">
+                    <materialDesign:PackIcon Kind="ArrowBack"/>
+                </Button>
+                <Button x:Name="button1E" Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}" BorderBrush="{x:Null}" Padding="0" Width="40" Height="40" Click="Image_Click" Margin="381,0,379,0">
+                    <Button.Background>
+                        <ImageBrush x:Name="EditPic" Stretch="UniformToFill"/>
+                    </Button.Background>
+                </Button>
+                <TextBox x:Name="EditUsername"
+                             Foreground="{DynamicResource TextColor}" materialDesign:TextFieldAssist.UnderlineBrush="{DynamicResource MenuButtonForeground}"
+                          materialDesign:HintAssist.Foreground="{DynamicResource HintTextColor}"
+                             materialDesign:HintAssist.IsFloating="True" materialDesign:HintAssist.Hint="{x:Static p:Resources.Username}"
+                              FontSize="16" Width="250" 
+                             BorderThickness="0,0,0,1"></TextBox>
+            </StackPanel>
+            <StackPanel Grid.Row="1" Orientation="Vertical" HorizontalAlignment="Center">
+                <DockPanel Margin="0,0,0,3">
+                    <TextBox x:Name="EditType"
+                             Foreground="{DynamicResource TextColor}" materialDesign:TextFieldAssist.UnderlineBrush="{DynamicResource MenuButtonForeground}" 
+                              materialDesign:HintAssist.Foreground="{DynamicResource HintTextColor}"
+                             materialDesign:HintAssist.IsFloating="True" materialDesign:HintAssist.Hint="{x:Static p:Resources.Type}"
+                              FontSize="16" Width="250" 
+                             BorderThickness="0,0,0,1"></TextBox>
+                </DockPanel>
+                <DockPanel Margin="0,0,0,3">
+                    <TextBox x:Name="EditLastName"
+                             Foreground="{DynamicResource TextColor}" materialDesign:TextFieldAssist.UnderlineBrush="{DynamicResource MenuButtonForeground}"
+                              materialDesign:HintAssist.Foreground="{DynamicResource HintTextColor}"
+                             materialDesign:HintAssist.IsFloating="True" materialDesign:HintAssist.Hint="{x:Static p:Resources.LastName}"
+                              FontSize="16" Width="250" 
+                             BorderThickness="0,0,0,1"></TextBox>
+                </DockPanel>
+                <DockPanel Margin="0,0,0,3">
+                    <TextBox x:Name="EditFirstName"
+                             Foreground="{DynamicResource TextColor}" materialDesign:TextFieldAssist.UnderlineBrush="{DynamicResource MenuButtonForeground}" 
+                              materialDesign:HintAssist.Foreground="{DynamicResource HintTextColor}"
+                             materialDesign:HintAssist.IsFloating="True" materialDesign:HintAssist.Hint="{x:Static p:Resources.FirstName}"
+                              FontSize="16" Width="250" 
+                             BorderThickness="0,0,0,1"></TextBox>
+                </DockPanel>
+                <DockPanel Margin="0,0,0,3">
+                    <TextBox x:Name="EditJoinDate"
+                             Foreground="{DynamicResource TextColor}" materialDesign:TextFieldAssist.UnderlineBrush="{DynamicResource MenuButtonForeground}" 
+                              materialDesign:HintAssist.Foreground="{DynamicResource HintTextColor}"
+                             materialDesign:HintAssist.IsFloating="True" materialDesign:HintAssist.Hint="{x:Static p:Resources.JoinDate}"
+                              FontSize="16" Width="250" 
+                             BorderThickness="0,0,0,1"></TextBox>
+                </DockPanel>
+                <DockPanel Margin="0,0,0,3">
+                    <TextBox x:Name="EditLeavingDate"
+                             Foreground="{DynamicResource TextColor}" materialDesign:TextFieldAssist.UnderlineBrush="{DynamicResource MenuButtonForeground}"  
+                              materialDesign:HintAssist.Foreground="{DynamicResource HintTextColor}"
+                             materialDesign:HintAssist.IsFloating="True" materialDesign:HintAssist.Hint="{x:Static p:Resources.LeftDate}"
+                              FontSize="16" Width="250" 
+                             BorderThickness="0,0,0,1"></TextBox>
+                </DockPanel>
+
+            </StackPanel>
+            <Grid Grid.Row="2">
+                <StackPanel x:Name="ErrorMessage" Orientation="Horizontal" Margin="20,0,0,0" Visibility="Collapsed">
+                    <materialDesign:PackIcon Kind="Error" Foreground="Red" Margin="0,0,5,0"/>
+                    <TextBlock Text="{x:Static p:Resources.ErrorMessage}" Foreground="Red"/>
+                </StackPanel>
+                <Button  Content="{x:Static p:Resources.Save}" Width="200" Height="40" Background="{DynamicResource ButtonBackgroundColor}" Foreground="{DynamicResource MenuButton}" Click="EditSave_Click" Margin="0,15,0,0"></Button>
+            </Grid>
+        </Grid>
+        <Grid x:Name="Add" Grid.Row="1" Grid.RowSpan="2" Background="{DynamicResource MainGridBackground}" Visibility="Collapsed">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="320"/>
+                <RowDefinition Height="70"/>
+            </Grid.RowDefinitions>
+            <StackPanel Grid.Row="0" Margin="0,5,0,0" Orientation="Vertical">
+                <Button Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}" Width="30" Height="30" Margin="20,0,0,0" Padding="0" HorizontalAlignment="Left" Foreground="{DynamicResource MenuButton}" Background="{x:Null}" BorderBrush="{x:Null}" Click="ArrowBack_Click">
+                    <materialDesign:PackIcon Kind="ArrowBack"/>
+                </Button>
+            </StackPanel>
+            <StackPanel Grid.Row="1" Orientation="Vertical" HorizontalAlignment="Center">
+                <DockPanel>
+                    <StackPanel Orientation="Vertical">
+                    <TextBox x:Name="AddUsername" Style="{StaticResource MaterialDesignFloatingHintTextBox}" 
+                             Foreground="{DynamicResource TextColor}"  materialDesign:HintAssist.Foreground="{DynamicResource HintTextColor}"
+                             materialDesign:TextFieldAssist.UnderlineBrush="{DynamicResource MenuButtonForeground}" 
+                             materialDesign:HintAssist.IsFloating="True" materialDesign:HintAssist.Hint="{x:Static p:Resources.Username}" FontSize="16" Width="250" 
+                             BorderThickness="0,0,0,1"></TextBox>
+                        <TextBlock Text="{x:Static p:Resources.UsernameHint}" Foreground="Gray" VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="0,5,0,0" ></TextBlock>
+                    </StackPanel>
+            </DockPanel>
+                <DockPanel>
+                    <StackPanel Orientation="Vertical">
+                        <TextBox x:Name="AddType" Style="{StaticResource MaterialDesignFloatingHintTextBox}" 
+                                 Foreground="{DynamicResource TextColor}"  materialDesign:HintAssist.Foreground="{DynamicResource HintTextColor}"
+                             materialDesign:TextFieldAssist.UnderlineBrush="{DynamicResource MenuButtonForeground}" 
+                             materialDesign:HintAssist.IsFloating="True" materialDesign:HintAssist.Hint="{x:Static p:Resources.Type}" FontSize="16" Width="250" 
+                             BorderThickness="0,0,0,1"></TextBox>
+                        <TextBlock Text="{x:Static p:Resources.TypeHint}" Foreground="Gray" VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="0,5,0,0" ></TextBlock>
+                    </StackPanel>
+                </DockPanel>
+                <DockPanel>
+                    <TextBox x:Name="AddLastName" Style="{StaticResource MaterialDesignFloatingHintTextBox}" 
+                             Foreground="{DynamicResource TextColor}"  materialDesign:HintAssist.Foreground="{DynamicResource HintTextColor}"
+                             materialDesign:TextFieldAssist.UnderlineBrush="{DynamicResource MenuButtonForeground}" 
+                             materialDesign:HintAssist.IsFloating="True" materialDesign:HintAssist.Hint="{x:Static p:Resources.LastName}" FontSize="16" Width="250" 
+                             BorderThickness="0,0,0,1"></TextBox>
+                </DockPanel>
+                <DockPanel>
+                    <TextBox x:Name="AddFirstName" Style="{StaticResource MaterialDesignFloatingHintTextBox}" 
+                             Foreground="{DynamicResource TextColor}"  materialDesign:HintAssist.Foreground="{DynamicResource HintTextColor}"
+                             materialDesign:TextFieldAssist.UnderlineBrush="{DynamicResource MenuButtonForeground}" 
+                             materialDesign:HintAssist.IsFloating="True" materialDesign:HintAssist.Hint="{x:Static p:Resources.FirstName}" FontSize="16" Width="250" 
+                             BorderThickness="0,0,0,1"></TextBox>
+                </DockPanel>
+
+            </StackPanel>
+            <Grid Grid.Row="2">
+                <StackPanel x:Name="ErrorMessageAdd" Orientation="Horizontal" Margin="20,0,0,0" Visibility="Collapsed">
+                    <materialDesign:PackIcon Kind="Error" Foreground="Red" Margin="0,0,5,0"/>
+                    <TextBlock Text="Some of entered data are incorrect" Foreground="Red"/>
+                </StackPanel>
+                <Button  Content="{x:Static p:Resources.Save}" Width="200" Height="40" Background="{DynamicResource ButtonBackgroundColor}" Foreground="{DynamicResource SideButtonForeground}" Click="AddSave_Click" Margin="0,15,0,0"></Button>
+            </Grid>
+        </Grid>
+    </Grid>
+</UserControl>

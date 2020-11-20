@@ -1,0 +1,29 @@
+﻿<Window x:Class="PlaninarskoDrustvo.ImageWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PlaninarskoDrustvo"
+        xmlns:p="clr-namespace:PlaninarskoDrustvo.Properties"
+        mc:Ignorable="d"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        WindowStyle="None"
+        Deactivated="Window_Deactivated"
+        MaxWidth="1000" MaxHeight="630">
+    <Grid>
+        <Border Margin="5">
+            <Border.Effect>
+                <DropShadowEffect ShadowDepth="1"/>
+            </Border.Effect>
+            <Border.Background>
+                <ImageBrush x:Name="Image"/>
+            </Border.Background>
+        </Border>
+        <Button x:Name="Back" Width="60" Height="60" Padding="0" HorizontalAlignment="Left" Foreground="{DynamicResource MenuButton}" Background="Transparent" BorderBrush="Transparent" Click="ArrowBack_Click" >
+            <materialDesign:PackIcon Kind="ArrowBack"/>
+        </Button>
+        <Button Grid.Row="0" Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}" Width="60" Height="60" Padding="0" HorizontalAlignment="Right" Foreground="{DynamicResource MenuButton}" Background="Transparent" BorderBrush="Transparent" Click="ArrowForward_Click" >
+            <materialDesign:PackIcon Kind="ArrowForward"/>
+        </Button>
+    </Grid>
+</Window>

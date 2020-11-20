@@ -1,0 +1,91 @@
+﻿<UserControl x:Class="PlaninarskoDrustvo.UserProfile"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:PlaninarskoDrustvo"
+             xmlns:p="clr-namespace:PlaninarskoDrustvo.Properties"
+             mc:Ignorable="d" 
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid Background="{DynamicResource MainGridBackground}" >
+        <Grid x:Name="Details" Background="{DynamicResource MainGridBackground}" >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="160"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <StackPanel Grid.Row="0" Margin="0,5,0,0" Orientation="Vertical">
+                <Button Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}" Width="30" Height="30" Margin="20,0,0,0" Padding="0" HorizontalAlignment="Left" Foreground="{DynamicResource MenuButton}" Background="{x:Null}" BorderBrush="{x:Null}" Click="ArrowBack_Click">
+                    <materialDesign:PackIcon Kind="ArrowBack"/>
+                </Button>
+                <Button x:Name="EditProfile" Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}" Background="{DynamicResource ButtonBackgroundColor}" HorizontalAlignment="Right" VerticalAlignment="Top" BorderBrush="{x:Null}" Padding="0" Width="30" Height="30" Click="EditProfile_Click" Margin="0,0,20,0" >
+                    <materialDesign:PackIcon Kind="Edit" Foreground="{DynamicResource MenuButton}"/>
+                </Button>
+                <Button x:Name="button" Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}" BorderBrush="{x:Null}" Padding="0" Width="50" Height="50" Margin="10">
+                    <Button.Background>
+                        <ImageBrush x:Name="DetailsPic" Stretch="UniformToFill"/>
+                    </Button.Background>
+                </Button>
+                <TextBlock x:Name="DetailsUsername" FontSize="16" Foreground="{DynamicResource TitleColor}" HorizontalAlignment="Center"></TextBlock>
+               
+            </StackPanel>
+            <StackPanel Grid.Row="1" Orientation="Vertical" HorizontalAlignment="Center" Margin="0,20,0,0">
+                <DockPanel Margin="0,0,0,10">
+                    <Label Content="{x:Static p:Resources.Type}" FontSize="16" Foreground="{DynamicResource TitleColor}" HorizontalAlignment="Left"></Label>
+                    <TextBlock x:Name="DetailsType" FontSize="16" Foreground="{DynamicResource TextColor}" VerticalAlignment="Center" Margin="5,0" HorizontalAlignment="Right"></TextBlock>
+                </DockPanel>
+                <DockPanel Margin="0,0,0,10">
+                    <Label Content="{x:Static p:Resources.FullName}" FontSize="16" Foreground="{DynamicResource TitleColor}" HorizontalAlignment="Left"></Label>
+                    <TextBlock x:Name="DetailsFirstName" FontSize="16" Foreground="{DynamicResource TextColor}" VerticalAlignment="Center" Margin="5,0" HorizontalAlignment="Right"></TextBlock>
+                    <TextBlock x:Name="DetailsLastName" FontSize="16" Foreground="{DynamicResource TextColor}" VerticalAlignment="Center" HorizontalAlignment="Right"></TextBlock>
+                </DockPanel>
+                <DockPanel Margin="0,0,0,10">
+                    <Label Content="{x:Static p:Resources.JoinDate}" FontSize="16" Foreground="{DynamicResource TitleColor}" HorizontalAlignment="Left"></Label>
+                    <TextBlock x:Name="DetailsJoindate" FontSize="16" Foreground="{DynamicResource TextColor}" VerticalAlignment="Center" Margin="5,0" HorizontalAlignment="Right"></TextBlock>
+                </DockPanel>
+            </StackPanel>
+        </Grid>
+        <Grid x:Name="Edit" Grid.Row="1" Grid.RowSpan="2" Background="{DynamicResource MainGridBackground}" Visibility="Collapsed">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="120"/>
+                <RowDefinition Height="100"/>
+                <RowDefinition Height="60"/>
+            </Grid.RowDefinitions>
+            <StackPanel Grid.Row="0" Margin="0,0,0,0" Orientation="Vertical">
+                <Button Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}" Width="30" Height="30" Margin="20,0,0,0" Padding="0" HorizontalAlignment="Left" Foreground="{DynamicResource MenuButton}" Background="{x:Null}" BorderBrush="{x:Null}" Click="ArrowBack_Click">
+                    <materialDesign:PackIcon Kind="ArrowBack"/>
+                </Button>
+                <Button x:Name="button1E" Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}" BorderBrush="{x:Null}" Padding="0" Width="40" Height="40" Click="Image_Click" Margin="381,0,379,0">
+                    <Button.Background>
+                        <ImageBrush x:Name="EditPic" Stretch="UniformToFill"/>
+                    </Button.Background>
+                </Button>
+                <TextBox x:Name="EditUsername"
+                             Foreground="{DynamicResource TextColor}" materialDesign:TextFieldAssist.UnderlineBrush="{DynamicResource MenuButtonForeground}"
+                          materialDesign:HintAssist.Foreground="{DynamicResource HintTextColor}"
+                             materialDesign:HintAssist.IsFloating="True" materialDesign:HintAssist.Hint="{x:Static p:Resources.Username}"
+                              FontSize="16" Width="250" 
+                             BorderThickness="0,0,0,1"></TextBox>
+            </StackPanel>
+            <StackPanel Grid.Row="1" Orientation="Vertical" HorizontalAlignment="Center">
+
+                <DockPanel Margin="0,0,0,3">
+                    <TextBox x:Name="EditPassword"
+                             Foreground="{DynamicResource TextColor}" materialDesign:TextFieldAssist.UnderlineBrush="{DynamicResource MenuButtonForeground}"  
+                              materialDesign:HintAssist.Foreground="{DynamicResource HintTextColor}"
+                             materialDesign:HintAssist.IsFloating="True" materialDesign:HintAssist.Hint="{x:Static p:Resources.Password}"
+                              FontSize="16" Width="250" 
+                             BorderThickness="0,0,0,1"></TextBox>
+                </DockPanel>
+
+            </StackPanel>
+            <Grid Grid.Row="2">
+                <StackPanel x:Name="ErrorMessage" Orientation="Horizontal" Margin="20,0,0,0" Visibility="Collapsed">
+                    <materialDesign:PackIcon Kind="Error" Foreground="Red" Margin="0,0,5,0"/>
+                    <TextBlock Text="{x:Static p:Resources.ErrorMessage}" Foreground="Red"/>
+                </StackPanel>
+                <Button  Content="{x:Static p:Resources.Save}" Width="200" Height="40" Background="{DynamicResource ButtonBackgroundColor}" Foreground="{DynamicResource MenuButton}" Click="EditSave_Click" Margin="0,15,0,0"></Button>
+            </Grid>
+        </Grid>
+    </Grid>
+</UserControl>

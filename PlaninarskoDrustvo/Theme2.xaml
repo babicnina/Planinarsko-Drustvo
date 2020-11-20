@@ -1,0 +1,30 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:PlaninarskoDrustvo">
+    <!--PRIMARY-->
+        <LinearGradientBrush x:Key="PrimaryBackground"  StartPoint="0.5,0" EndPoint="0.5,1">
+        <GradientStop Color="#353636" Offset="0.0" />
+        <GradientStop Color="#333536" Offset="0.25" />
+        <GradientStop Color="#202121" Offset="0.65" />
+            <GradientStop Color="#000000" Offset="1" />
+        </LinearGradientBrush>
+
+    <SolidColorBrush x:Key="MainGridBackground" Color="#000000"/>
+    <SolidColorBrush x:Key="SideGridBackground" Color="#000000"/>
+    <SolidColorBrush x:Key="MenuButtonForeground" Color="#e3e3e3"/>
+    <SolidColorBrush x:Key="BorderColorPrimary" Color="#6495ed"/>
+    <SolidColorBrush x:Key="ItemLanguageColor" Color="#6495ed"/>
+    <SolidColorBrush x:Key="SidemenuIcon" Color="#FFFFFF"/>
+    <SolidColorBrush x:Key="SidemenuItem" Color="#FFFFFF"/>
+    <SolidColorBrush x:Key="SideButtonForeground" Color="#FFFFFF"/>
+    <SolidColorBrush x:Key="MenuButton" Color="#e3e3e3"/>
+
+    <SolidColorBrush x:Key="TitleColor" Color="#6495ed"/>
+    <SolidColorBrush x:Key="TextColor" Color="#FF8395C5"/>
+    <SolidColorBrush x:Key="HintTextColor" Color="#FFB2BEE0"/>
+    <SolidColorBrush x:Key="BorderBackgroundColor" Color="#FFFFFF" Opacity="0.2"/>
+    <SolidColorBrush x:Key="BorderColorAccent" Color="#FF8B9EB8"/>
+    <SolidColorBrush x:Key="CursosrForeground" Color="#e3e3e3"/>
+    <!--ACCENT-->
+    <SolidColorBrush x:Key="SecondaryAccentForegroundBrush" Color="Khaki"/>
+</ResourceDictionary>

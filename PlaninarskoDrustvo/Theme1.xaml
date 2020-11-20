@@ -1,0 +1,26 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:PlaninarskoDrustvo">
+    <!--PRIMARY-->
+    <SolidColorBrush x:Key="PrimaryBackground" Color="#d6dfe4"/>
+    <SolidColorBrush x:Key="MainGridBackground" Color="#FFFFFF"/>
+    <SolidColorBrush x:Key="SideGridBackground" Color="#000000"/>
+    <SolidColorBrush x:Key="MenuButtonForeground" Color="#303960"/>
+    <SolidColorBrush x:Key="BorderColorPrimary" Color="#FFFFFF"/>
+    <SolidColorBrush x:Key="ItemLanguageColor" Color="#D0E1F9"/>
+    <SolidColorBrush x:Key="SidemenuIcon" Color="#6a6766"/>
+    <SolidColorBrush x:Key="SidemenuItem" Color="#181311"/>
+    <SolidColorBrush x:Key="SideButtonForeground" Color="#6a6766"/>
+    <SolidColorBrush x:Key="MenuButton" Color="#6a6766"/>
+
+    <SolidColorBrush x:Key="TitleColor" Color="#FF302E2E"/>
+    <SolidColorBrush x:Key="TextColor" Color="#FF403F3F"/>
+    <SolidColorBrush x:Key="HintTextColor" Color="#FF6A6969"/>
+    <SolidColorBrush x:Key="ButtonBackgroundColor" Color="#FFFFFF" Opacity="0.3"/>
+    <SolidColorBrush x:Key="BorderColorAccent" Color="#FFC0C7CF"/>
+    <SolidColorBrush x:Key="CursorForeground" Color="#303960"/>
+    
+    
+    <!--ACCENT-->
+    <SolidColorBrush x:Key="SecondaryAccentForegroundBrush" Color="#77abb7"/>
+</ResourceDictionary>
